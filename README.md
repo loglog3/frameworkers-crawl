@@ -13,6 +13,30 @@ event["queryStringParameters"]['queryparam1']
 
 https://velog.io/@sangeun-jo/AWS-lambda%EC%97%90%EC%84%9C-chrome-driver-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0
 
+# FastApi 실행하는법
+```
+uvicorn main:app --reload
+```
+
+# 파이썬 가상환경 만들기
+```
+python3 -m venv crawlEnv
+```
+
+# 파이썬 가상환경 활성화하기
+```
+source ./crawlEnv/bin/activate
+```
+
+# 파이썬 얼리기
+```
+pip freeze > requirements.txt
+```
+
+# 파이썬 얼린거 설치
+```
+pip install -r requirements.txt 
+```
 
 # 크롬드라이버
 https://chromedriver.chromium.org/
