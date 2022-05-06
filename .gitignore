@@ -1,3 +1,4 @@
 instagrame-crawl-machine.cer
 crawlEnv
 .env
+__pycache__
