@@ -13,6 +13,21 @@ event["queryStringParameters"]['queryparam1']
 
 https://velog.io/@sangeun-jo/AWS-lambda%EC%97%90%EC%84%9C-chrome-driver-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0
 
+
+```
+uvicorn main:app --host 0.0.0.0 --port 5000
+```
+
+# ssh ec2 연결
+```
+ssh -i "instagrame-crawl-machine.cer" ubuntu@
+```
+
+# EC2 에 chrome 설치하는 순간
+```
+https://codediary21.tistory.com/39
+```
+
 # FastApi 실행하는법
 ```
 uvicorn main:app --reload

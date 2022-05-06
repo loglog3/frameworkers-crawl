@@ -8,6 +8,11 @@ import os
 from typing import Optional
 from fastapi import FastAPI
 from sys import platform
+from decouple import config
+
+INSTAGRAM_ID = config('INSTAGRAM_ID')
+INSTAGRAM_PW = config('INSTAGRAM_PW')
+
 
 def launchDriver():
     chrome_options = Options()
@@ -33,7 +38,7 @@ def launchDriver():
         chrome_options.add_argument('--disk-cache-dir=/tmp/cache-dir')
         chrome_options.add_argument('user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36')
 
-        chrome_options.binary_location = '/opt/python/bin/headless-chromium'
+        # chrome_options.binary_location = '/opt/python/bin/headless-chromium'
         driver = webdriver.Chrome('./chromedriver_linux', chrome_options=chrome_options)
 
     return driver
@@ -42,9 +47,9 @@ def login(driver):
     driver.get('https://www.instagram.com')
     print('인스타 접속 중...')
     sleep(2)
-    driver.find_element(by=By.CSS_SELECTOR, value='#loginForm > div > div:nth-child(1) > div > label > input').send_keys('gordemafia@gmail.com') # catdesignshop # gordemafia@gmail.com
+    driver.find_element(by=By.CSS_SELECTOR, value='#loginForm > div > div:nth-child(1) > div > label > input').send_keys(INSTAGRAM_ID) # catdesignshop # gordemafia@gmail.com
     driver.find_element(by=By.CSS_SELECTOR, value=
-        '#loginForm > div > div:nth-child(2) > div > label > input').send_keys('gorde!@#') # hanseung123! # gorde!@#
+        '#loginForm > div > div:nth-child(2) > div > label > input').send_keys(INSTAGRAM_PW) # hanseung123! # gorde!@#
     driver.find_element(by=By.CSS_SELECTOR, value=
         '#loginForm > div > div:nth-child(3) > button').click()
     print('로그인 버튼 클릭...')
@@ -122,6 +127,7 @@ def read_root():
 def read_item(user_id: str):
     global possibility
     if possibility == False:
+        print("이미 실행중인 크롤링이 있습니다")
         return {"지금"}
     possibility = False
     names = get_users_by_crawling(driver, user_id)
