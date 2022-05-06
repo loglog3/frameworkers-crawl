@@ -44,7 +44,8 @@ def launchDriver():
     return driver
 
 def login(driver):
-    driver.get('https://www.instagram.com')
+    # driver.get('https://www.instagram.com')
+    driver.get('https://www.instagramadfsnjkadsf.com')
     print('인스타 접속 중...')
     sleep(2)
     driver.find_element(by=By.CSS_SELECTOR, value='#loginForm > div > div:nth-child(1) > div > label > input').send_keys(INSTAGRAM_ID) # catdesignshop # gordemafia@gmail.com
@@ -55,11 +56,15 @@ def login(driver):
     print('로그인 버튼 클릭...')
     sleep(3) # 로그인 대기
 
-def get_users_by_crawling(driver, instagramId):
-    driver.get(f'https://www.instagram.com/{instagramId}')
-    print(f'이동 중... https://www.instagram.com/{instagramId}')
+
+def get_users_by_crawling(driver, instagram_id):
+    """instagram_id 고객의 팔로잉 명단 리스트를 반환합니다. 또는 오류 발생시 False 를 반환합니다
+    """
+    driver.get(f'https://www.instagram.com/{instagram_id}')
+    print(f'이동 중... https://www.instagram.com/{instagram_id}')
     sleep(2) # 검색할 계정 페이지 이동 대기
 
+    user_instagram_feed_check_count = 0
     while True:
         try:
             팔로잉버튼 = driver.find_element(
@@ -68,6 +73,10 @@ def get_users_by_crawling(driver, instagramId):
         except:
             sleep(2)
             print('실패, 재시도합니다')
+            user_instagram_feed_check_count += 1
+            if user_instagram_feed_check_count == 5:
+                print('최종 실패했습니다')
+                return False
     
     팔로잉수 = 팔로잉버튼.get_attribute('textContent')
     팔로잉버튼.click()
@@ -141,5 +150,8 @@ def read_item(user_id: str):
     possibility = False
     names = get_users_by_crawling(driver, user_id)
     possibility = True
-    return names
+    if names == False:
+        return {"result": "실패"}
+    else:
+        return names
 
