@@ -40,7 +40,8 @@ def launchDriver():
 
         # chrome_options.binary_location = '/opt/python/bin/headless-chromium'
         driver = webdriver.Chrome('./chromedriver_linux', chrome_options=chrome_options)
-
+    
+    print('크롬 드라이버 생성 됨')
     return driver
 
 def login(driver):
@@ -50,9 +51,12 @@ def login(driver):
     sleep(3)
     while True:
         try:
+            print('로그인 폼 찾기 시도')
             driver.find_element(by=By.CSS_SELECTOR, value='#loginForm > div > div:nth-child(1) > div > label > input').send_keys(INSTAGRAM_ID) # catdesignshop # gordemafia@gmail.com
             driver.find_element(by=By.CSS_SELECTOR, value=
                 '#loginForm > div > div:nth-child(2) > div > label > input').send_keys(INSTAGRAM_PW) # hanseung123! # gorde!@#
+            print('로그인 폼 찾기 성공')
+            break
         except:
             print('로그인 폼을 찾지 못했습니다')
             sleep(5)
