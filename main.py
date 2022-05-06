@@ -58,13 +58,20 @@ def login(driver):
 def get_users_by_crawling(driver, instagramId):
     driver.get(f'https://www.instagram.com/{instagramId}')
     print(f'이동 중... https://www.instagram.com/{instagramId}')
-    sleep(10) # 검색할 계정 페이지 이동 대기
+    sleep(2) # 검색할 계정 페이지 이동 대기
 
-    팔로잉버튼 = driver.find_element(by=By.CSS_SELECTOR, value=
-        '#react-root > section > main > div > header > section > ul > li:nth-child(3) > a > div')
+    while True:
+        try:
+            팔로잉버튼 = driver.find_element(
+                by=By.CSS_SELECTOR, value='#react-root > section > main > div > header > section > ul > li:nth-child(3) > a > div')
+            break
+        except:
+            sleep(2)
+            print('실패, 재시도합니다')
+    
     팔로잉수 = 팔로잉버튼.get_attribute('textContent')
     팔로잉버튼.click()
-    sleep(3)
+    sleep(2)
 
     print('팔로잉 목록 받아오기 시작...')
     loop_index = 0
@@ -76,13 +83,13 @@ def get_users_by_crawling(driver, instagramId):
         if loop_index < 5:
             sleep(0.8)
         elif loop_index < 10:
-            sleep(1.2)
+            sleep(1.4)
         elif loop_index < 20:
-            sleep(1.5)
-        elif loop_index < 30:
             sleep(1.7)
+        elif loop_index < 30:
+            sleep(1.9)
         else:
-            sleep(2)
+            sleep(2.3)
 
         new_height = driver.execute_script(
             "return document.querySelector('body > div.RnEpo.Yx5HN > div > div > div > div.isgrP').scrollHeight")
