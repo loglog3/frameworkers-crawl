@@ -45,7 +45,7 @@ def launchDriver():
 
 def login(driver):
     # driver.get('https://www.instagram.com')
-    driver.get('https://www.instagramadfsnjkadsf.com')
+    driver.get('https://www.instagram.com')
     print('인스타 접속 중...')
     sleep(2)
     driver.find_element(by=By.CSS_SELECTOR, value='#loginForm > div > div:nth-child(1) > div > label > input').send_keys(INSTAGRAM_ID) # catdesignshop # gordemafia@gmail.com
