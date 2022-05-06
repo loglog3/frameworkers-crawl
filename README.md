@@ -1,1 +1,28 @@
-# frameworkers-crawl
+# Lambda-Selenium-Chromedriver
+Setting up the Selenium,Chromedriver environment in AWS Lambda.   
+lambda_function.py contains the process of downloading the file from S3, completing the work through Cellinium in a chrome environment, and uploading the file back to S3.   
+
+---
+### 1. Copy lambda_function.py and paste it into your lambda function.
+### 2. Do not release the two zip files(chromedriver.zip, selenium.zip) in the layer folder, add them to the lambda layer, respectively, and apply them to the lambda function.
+### 3. Check that the test is successful after changing the lambda function to suit your logic.
+### 4. If successful, tap Star⭐️ in this repository. Yeah!
+
+https://stackoverflow.com/questions/31329958/how-to-pass-a-querystring-or-route-parameter-to-aws-lambda-from-amazon-api-gatew
+event["queryStringParameters"]['queryparam1']
+
+https://velog.io/@sangeun-jo/AWS-lambda%EC%97%90%EC%84%9C-chrome-driver-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0
+
+
+# 크롬드라이버
+https://chromedriver.chromium.org/
+
+
+# 참고 블로그
+https://velog.io/@sangeun-jo/AWS-lambda%EC%97%90%EC%84%9C-chrome-driver-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0
+
+
+# os.listdir('./Music')
+
+# 디버깅1
+https://league-cat.tistory.com/278
