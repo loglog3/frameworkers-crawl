@@ -47,10 +47,15 @@ def login(driver):
     # driver.get('https://www.instagram.com')
     driver.get('https://www.instagram.com')
     print('인스타 접속 중...')
-    sleep(10)
-    driver.find_element(by=By.CSS_SELECTOR, value='#loginForm > div > div:nth-child(1) > div > label > input').send_keys(INSTAGRAM_ID) # catdesignshop # gordemafia@gmail.com
-    driver.find_element(by=By.CSS_SELECTOR, value=
-        '#loginForm > div > div:nth-child(2) > div > label > input').send_keys(INSTAGRAM_PW) # hanseung123! # gorde!@#
+    sleep(3)
+    while True:
+        try:
+            driver.find_element(by=By.CSS_SELECTOR, value='#loginForm > div > div:nth-child(1) > div > label > input').send_keys(INSTAGRAM_ID) # catdesignshop # gordemafia@gmail.com
+            driver.find_element(by=By.CSS_SELECTOR, value=
+                '#loginForm > div > div:nth-child(2) > div > label > input').send_keys(INSTAGRAM_PW) # hanseung123! # gorde!@#
+        except:
+            print('로그인 폼을 찾지 못했습니다')
+            sleep(5)
     driver.find_element(by=By.CSS_SELECTOR, value=
         '#loginForm > div > div:nth-child(3) > button').click()
     print('로그인 버튼 클릭...')
