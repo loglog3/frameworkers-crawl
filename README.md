@@ -44,6 +44,11 @@ uvicorn main:app --reload
 uvicorn main:app --host 0.0.0.0 --port 5000 >> logs.txt 2>&1
 ```
 
+# SSL https production
+```
+uvicorn main:app --host 0.0.0.0 --port 5000 --ssl-keyfile=./private.pem --ssl-certfile=./public.pem
+```
+
 # 파이썬 가상환경 만들기
 ```
 python3 -m venv crawlEnv

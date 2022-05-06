@@ -59,7 +59,8 @@ def login(driver):
             break
         except:
             print('로그인 폼을 찾지 못했습니다')
-            sleep(5)
+            driver.get('https://www.instagram.com')
+            sleep(10)
     driver.find_element(by=By.CSS_SELECTOR, value=
         '#loginForm > div > div:nth-child(3) > button').click()
     print('로그인 버튼 클릭...')
