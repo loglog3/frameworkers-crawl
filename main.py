@@ -7,38 +7,35 @@ import json
 import os
 from typing import Optional
 from fastapi import FastAPI
-
+from sys import platform
 
 def launchDriver():
     chrome_options = Options()
-    chrome_options.add_argument('window-size=1920,1080')
+    if platform == 'darwin':
+        chrome_options.add_argument('window-size=1920,1080')
+        driver = webdriver.Chrome('./chromedriver_mac', chrome_options=chrome_options) # TODO LOCAL
+    elif platform == 'linux':
+        # TODO LABMDA
+        chrome_options.add_argument('--disable-dev-shm-usage') # ??
+        chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--disable-gpu')
+        chrome_options.add_argument('--window-size=1280x1696')
+        chrome_options.add_argument('--user-data-dir=/tmp/user-data')
+        chrome_options.add_argument('--hide-scrollbars')
+        chrome_options.add_argument('--enable-logging')
+        chrome_options.add_argument('--log-level=0')
+        chrome_options.add_argument('--v=99')
+        chrome_options.add_argument('--single-process')
+        chrome_options.add_argument('--data-path=/tmp/data-path')
+        chrome_options.add_argument('--ignore-certificate-errors')
+        chrome_options.add_argument('--homedir=/tmp')
+        chrome_options.add_argument('--disk-cache-dir=/tmp/cache-dir')
+        chrome_options.add_argument('user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36')
 
-    # TODO LABMDA
-    # chrome_options.add_argument('--disable-dev-shm-usage') # ??
-    # chrome_options.add_argument('--headless')
-    # chrome_options.add_argument('--no-sandbox')
-    # chrome_options.add_argument('--disable-gpu')
-    # chrome_options.add_argument('--window-size=1280x1696')
-    # chrome_options.add_argument('--user-data-dir=/tmp/user-data')
-    # chrome_options.add_argument('--hide-scrollbars')
-    # chrome_options.add_argument('--enable-logging')
-    # chrome_options.add_argument('--log-level=0')
-    # chrome_options.add_argument('--v=99')
-    # chrome_options.add_argument('--single-process')
-    # chrome_options.add_argument('--data-path=/tmp/data-path')
-    # chrome_options.add_argument('--ignore-certificate-errors')
-    # chrome_options.add_argument('--homedir=/tmp')
-    # chrome_options.add_argument('--disk-cache-dir=/tmp/cache-dir')
-    # chrome_options.add_argument('user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36')
+        chrome_options.binary_location = '/opt/python/bin/headless-chromium'
+        driver = webdriver.Chrome('./chromedriver_linux', chrome_options=chrome_options)
 
-    # print('🍏',os.listdir('/opt')) # 🍏 ['python']
-    # print('🍏',os.listdir('/opt/python')) # 🍏 ['bin', 'chromedriver_installer', 'easy_install.py', 'lambda_function.py', 'lib', 'pip', 'pkg_resources', 'selenium', 'setuptools', 'setuptools-39.2.0.dist-info', 'starter.py', 'wheel']
-    # print('🍏',os.listdir('/opt/python/bin')) # 🍏 ['chromedriver', 'headless-chromium']
-    
-    # chrome_options.binary_location = '/opt/python/bin/headless-chromium'
-    # driver = webdriver.Chrome('/opt/python/bin/chromedriver', chrome_options=chrome_options)
-    
-    driver = webdriver.Chrome('./chromedriver', chrome_options=chrome_options) # TODO LOCAL
     return driver
 
 def login(driver):
