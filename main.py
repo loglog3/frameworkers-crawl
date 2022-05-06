@@ -9,10 +9,10 @@ from typing import Optional
 from fastapi import FastAPI
 from sys import platform
 from decouple import config
+from fastapi.middleware.cors import CORSMiddleware
 
 INSTAGRAM_ID = config('INSTAGRAM_ID')
 INSTAGRAM_PW = config('INSTAGRAM_PW')
-
 
 def launchDriver():
     chrome_options = Options()
@@ -143,6 +143,24 @@ app = FastAPI()
 possibility = True
 driver = launchDriver()
 login(driver)
+
+origins = [
+    "http://localhost",
+    "https://localhost",
+    "http://localhost:3000",
+    "https://localhost:3000",
+    "http://frameworkers.net",
+    "https://frameworkers.net",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.get("/possibility")
 def read_root():
