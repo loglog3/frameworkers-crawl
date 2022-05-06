@@ -63,7 +63,7 @@ def get_users_by_crawling(driver, instagramId):
     while True:
         try:
             팔로잉버튼 = driver.find_element(
-                by=By.CSS_SELECTOR, value='#react-root > section > main > div > header > section > ul > li:nth-child(3) > a > div')
+                by=By.CSS_SELECTOR, value='section > main > div > header > section > ul > li:nth-child(3) > a > div')
             break
         except:
             sleep(2)
@@ -75,27 +75,29 @@ def get_users_by_crawling(driver, instagramId):
 
     print('팔로잉 목록 받아오기 시작...')
     loop_index = 0
+    loop_buffer = 0
+    loop_breaker = False
     while True:
         height = driver.execute_script(
             "return document.querySelector('body > div.RnEpo.Yx5HN > div > div > div > div.isgrP').scrollHeight")
         driver.execute_script(
             f"document.querySelector('body > div.RnEpo.Yx5HN > div > div > div > div.isgrP').scrollTo(0, {height})")
-        if loop_index < 5:
-            sleep(0.8)
-        elif loop_index < 10:
-            sleep(1.4)
-        elif loop_index < 20:
-            sleep(1.7)
-        elif loop_index < 30:
-            sleep(1.9)
-        else:
-            sleep(2.3)
-
-        new_height = driver.execute_script(
-            "return document.querySelector('body > div.RnEpo.Yx5HN > div > div > div > div.isgrP').scrollHeight")
-        if height == new_height:
-            break
+        while True: # 무한스크롤로 새로운 스크롤을 받아오면 바로 넘어감
+            new_height = driver.execute_script(
+                "return document.querySelector('body > div.RnEpo.Yx5HN > div > div > div > div.isgrP').scrollHeight")
+            if height == new_height:
+                loop_buffer += 1
+                if (loop_buffer == 8):
+                    loop_breaker = True
+                    break
+                sleep(0.5)
+                continue
+            else:
+                break
+        loop_buffer = 0
         loop_index += 1
+        if loop_breaker == True:
+            break
 
     print('팔로잉 목록 받아오기 종료...')
     def getNames(element):
