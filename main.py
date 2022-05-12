@@ -163,6 +163,11 @@ app.add_middleware(
 )
 
 
+@app.get("/")
+def health_check():
+    print('heach check 성공!')
+    return {"Hello": "I'm here"}
+
 @app.get("/possibility")
 def read_root():
     global possibility
@@ -170,7 +175,7 @@ def read_root():
     return {"Hello": possibility}
 
 
-@app.get("/")
+@app.get("/instagram")
 def read_item(user_id: str):
     global possibility
     if possibility == False:
