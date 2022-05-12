@@ -186,6 +186,6 @@ def read_item(user_id: str):
 @app.on_event("shutdown")
 def shutdown_event():
     print('FAST API가 종료됩니다')
-    global driver
-    driver.quit()
-    print('chromium 을 종료했습니다')
+    # global driver
+    # driver.quit()
+    # print('chromium 을 종료했습니다')
