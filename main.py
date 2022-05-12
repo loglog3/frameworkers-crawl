@@ -10,6 +10,9 @@ from fastapi import FastAPI
 from sys import platform
 from decouple import config
 from fastapi.middleware.cors import CORSMiddleware
+import datetime
+
+
 
 INSTAGRAM_ID = config('INSTAGRAM_ID')
 INSTAGRAM_PW = config('INSTAGRAM_PW')
@@ -165,8 +168,15 @@ app.add_middleware(
 
 @app.get("/")
 def health_check():
-    print('heach check 성공!')
+    d = datetime.datetime.now()
+    print(f'[{d}] heach check 성공!')
     return {"Hello": "I'm here"}
+
+@app.get("/check")
+def health_check2():
+    d = datetime.datetime.now()
+    print(f'[{d}] 여긴 어디!')
+    return {"여긴": "여딜까"}
 
 @app.get("/possibility")
 def read_root():
