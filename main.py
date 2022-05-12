@@ -144,17 +144,18 @@ def get_users_by_crawling(driver, instagram_id):
 
 app = FastAPI()
 possibility = True
-# driver = launchDriver()
-# login(driver)
+driver = launchDriver()
+login(driver)
 
 origins = [
-    "*",
     "http://localhost",
     "https://localhost",
     "http://localhost:3000",
     "https://localhost:3000",
     "http://frameworkers.net",
     "https://frameworkers.net",
+    "http://www.frameworkers.net",
+    "https://www.frameworkers.net",
 ]
 
 app.add_middleware(
@@ -202,6 +203,6 @@ def read_item(user_id: str):
 @app.on_event("shutdown")
 def shutdown_event():
     print('FAST API가 종료됩니다')
-    # global driver
-    # driver.quit()
-    # print('chromium 을 종료했습니다')
+    global driver
+    driver.quit()
+    print('chromium 을 종료했습니다')
