@@ -145,6 +145,7 @@ possibility = True
 # login(driver)
 
 origins = [
+    "*",
     "http://localhost",
     "https://localhost",
     "http://localhost:3000",
