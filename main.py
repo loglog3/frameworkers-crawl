@@ -141,8 +141,8 @@ def get_users_by_crawling(driver, instagram_id):
 
 app = FastAPI()
 possibility = True
-driver = launchDriver()
-login(driver)
+# driver = launchDriver()
+# login(driver)
 
 origins = [
     "http://localhost",

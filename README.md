@@ -48,6 +48,8 @@ uvicorn main:app --host 0.0.0.0 --port 5000 >> logs.txt 2>&1
 ```
 uvicorn main:app --host 0.0.0.0 --port 5000 --ssl-keyfile=./private.pem --ssl-certfile=./public.pem
 uvicorn main:app --host 0.0.0.0 --port 5000 --ssl-keyfile=./key.pem --ssl-certfile=./cert.pem
+uvicorn main:app --host 0.0.0.0 --port 5000 --ssl-keyfile=./key.pem --ssl-certfile=./cert.pem
+uvicorn main:app --host 0.0.0.0 --port 80 >> logs.txt 2>&1
 ```
 
 # 파이썬 가상환경 만들기
