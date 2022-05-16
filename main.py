@@ -59,7 +59,8 @@ def login(driver):
     sleep(3)
     while True:
         try:
-            print('로그인 폼 찾기 시도')
+            d = datetime.datetime.now()
+            print(f'[{d}] 로그인 폼 찾기 시도')
             driver.find_element(by=By.CSS_SELECTOR, value='#loginForm > div > div:nth-child(1) > div > label > input').send_keys(INSTAGRAM_ID) # catdesignshop # gordemafia@gmail.com
             driver.find_element(by=By.CSS_SELECTOR, value=
                 '#loginForm > div > div:nth-child(2) > div > label > input').send_keys(INSTAGRAM_PW) # hanseung123! # gorde!@#
