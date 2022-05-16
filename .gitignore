@@ -2,3 +2,7 @@ instagrame-crawl-machine.cer
 crawlEnv
 .env
 __pycache__
+__pycache__/
+__pycache__/*
+logs.txt
+nohup.out
