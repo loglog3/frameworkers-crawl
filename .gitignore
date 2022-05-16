@@ -2,7 +2,12 @@ instagrame-crawl-machine.cer
 crawlEnv
 .env
 __pycache__
+<<<<<<< HEAD
 __pycache__/
 __pycache__/*
 logs.txt
 nohup.out
+=======
+cert.pem
+key.pem
+>>>>>>> 52ac41382700398f6988c8ba9bac4068c11caa36

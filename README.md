@@ -21,6 +21,12 @@ uvicorn main:app --host 0.0.0.0 --port 5000
 # ssh ec2 연결
 ```
 ssh -i "instagrame-crawl-machine.cer" ubuntu@
+ssh -i "instagrame-crawl-machine.cer" ubuntu@ec2-3-39-80-34.ap-northeast-2.compute.amazonaws.com
+```
+
+# Ip를 다른 인스턴스에 달았을 경우 변경하는 법
+```
+https://visu4l.tistory.com/entry/ssh-%EC%9B%90%EA%B2%A9-%EC%A0%91%EC%86%8D-%EC%97%90%EB%9F%ACWARNING-REMOTE-HOST-IDENTIFICATION-HAS-CHANGED
 ```
 
 # EC2 에 chrome 설치하는 순간
@@ -28,9 +34,24 @@ ssh -i "instagrame-crawl-machine.cer" ubuntu@
 https://codediary21.tistory.com/39
 ```
 
-# FastApi 실행하는법
+# FastApi 디버그모드로 실행하는법
 ```
 uvicorn main:app --reload
+```
+
+# FastApi 프로덕션 모드로 실행
+```
+uvicorn main:app --host 0.0.0.0 --port 5000 >> logs.txt 2>&1
+```
+
+# SSL https production
+```
+uvicorn main:app --host 0.0.0.0 --port 5000 --ssl-keyfile=./private.pem --ssl-certfile=./public.pem
+uvicorn main:app --host 0.0.0.0 --port 5000 --ssl-keyfile=./key.pem --ssl-certfile=./cert.pem
+uvicorn main:app --host 0.0.0.0 --port 5000 --ssl-keyfile=./key.pem --ssl-certfile=./cert.pem
+uvicorn main:app --host 0.0.0.0 --port 5000 >> logs.txt 2>&1
+uvicorn main:app --host 0.0.0.0 --port 5000
+uvicorn main:app --host 0.0.0.0 --port 80 >> logs.txt 2>&1
 ```
 
 # 파이썬 가상환경 만들기

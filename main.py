@@ -9,10 +9,13 @@ from typing import Optional
 from fastapi import FastAPI
 from sys import platform
 from decouple import config
+from fastapi.middleware.cors import CORSMiddleware
+import datetime
+
+
 
 INSTAGRAM_ID = config('INSTAGRAM_ID')
 INSTAGRAM_PW = config('INSTAGRAM_PW')
-
 
 def launchDriver():
     chrome_options = Options()
@@ -22,14 +25,17 @@ def launchDriver():
     elif platform == 'linux':
         # TODO LABMDA
         chrome_options.add_argument('--disable-dev-shm-usage') # ??
+        chrome_options.add_argument('--incognito') # 시크릿모드
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--disable-gpu')
-        chrome_options.add_argument('--window-size=1280x1696')
+        chrome_options.add_argument('--window-size=1280x960')
         chrome_options.add_argument('--user-data-dir=/tmp/user-data')
         chrome_options.add_argument('--hide-scrollbars')
-        chrome_options.add_argument('--enable-logging')
-        chrome_options.add_argument('--log-level=0')
+        # chrome_options.add_argument('--enable-logging')
+        # chrome_options.add_argument('--log-level=0')
+        chrome_options.add_argument('--disable-setuid-sandbox')
+        chrome_options.add_argument('--disable-dev-shm-usage')
         chrome_options.add_argument('--v=99')
         chrome_options.add_argument('--single-process')
         chrome_options.add_argument('--data-path=/tmp/data-path')
@@ -40,7 +46,8 @@ def launchDriver():
 
         # chrome_options.binary_location = '/opt/python/bin/headless-chromium'
         driver = webdriver.Chrome('./chromedriver_linux', chrome_options=chrome_options)
-
+    
+    print('크롬 드라이버 생성 됨')
     return driver
 
 def login(driver):
@@ -50,12 +57,16 @@ def login(driver):
     sleep(3)
     while True:
         try:
+            print('로그인 폼 찾기 시도')
             driver.find_element(by=By.CSS_SELECTOR, value='#loginForm > div > div:nth-child(1) > div > label > input').send_keys(INSTAGRAM_ID) # catdesignshop # gordemafia@gmail.com
             driver.find_element(by=By.CSS_SELECTOR, value=
                 '#loginForm > div > div:nth-child(2) > div > label > input').send_keys(INSTAGRAM_PW) # hanseung123! # gorde!@#
+            print('로그인 폼 찾기 성공')
+            break
         except:
             print('로그인 폼을 찾지 못했습니다')
-            sleep(5)
+            driver.get('https://www.instagram.com')
+            sleep(10)
     driver.find_element(by=By.CSS_SELECTOR, value=
         '#loginForm > div > div:nth-child(3) > button').click()
     print('로그인 버튼 클릭...')
@@ -139,6 +150,38 @@ possibility = True
 driver = launchDriver()
 login(driver)
 
+origins = [
+    "http://localhost",
+    "https://localhost",
+    "http://localhost:3000",
+    "https://localhost:3000",
+    "http://frameworkers.net",
+    "https://frameworkers.net",
+    "http://www.frameworkers.net",
+    "https://www.frameworkers.net",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+@app.get("/")
+def health_check():
+    d = datetime.datetime.now()
+    print(f'[{d}] heach check 성공!')
+    return {"Hello": "I'm here"}
+
+@app.get("/check")
+def health_check2():
+    d = datetime.datetime.now()
+    print(f'[{d}] 여긴 어디!')
+    return {"여긴": "여딜까"}
+
 @app.get("/possibility")
 def read_root():
     global possibility
@@ -146,7 +189,7 @@ def read_root():
     return {"Hello": possibility}
 
 
-@app.get("/")
+@app.get("/instagram")
 def read_item(user_id: str):
     global possibility
     if possibility == False:
@@ -160,3 +203,9 @@ def read_item(user_id: str):
     else:
         return names
 
+@app.on_event("shutdown")
+def shutdown_event():
+    print('FAST API가 종료됩니다')
+    global driver
+    driver.quit()
+    print('chromium 을 종료했습니다')
