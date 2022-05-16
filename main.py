@@ -65,8 +65,9 @@ def login(driver):
                 '#loginForm > div > div:nth-child(2) > div > label > input').send_keys(INSTAGRAM_PW) # hanseung123! # gorde!@#
             print('로그인 폼 찾기 성공')
             break
-        except:
+        except Exception as ex:
             print('로그인 폼을 찾지 못했습니다')
+            print(ex)
             driver.get('https://www.instagram.com')
             sleep(10)
     driver.find_element(by=By.CSS_SELECTOR, value=
