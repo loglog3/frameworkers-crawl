@@ -47,13 +47,15 @@ def launchDriver():
         # chrome_options.binary_location = '/opt/python/bin/headless-chromium'
         driver = webdriver.Chrome('./chromedriver_linux', chrome_options=chrome_options)
     
-    print('크롬 드라이버 생성 됨')
+    d = datetime.datetime.now()
+    print(f'[{d}] 크롬 드라이버 생성 됨')
     return driver
 
 def login(driver):
+    d = datetime.datetime.now()
     # driver.get('https://www.instagram.com')
     driver.get('https://www.instagram.com')
-    print('인스타 접속 중...')
+    print(f'[{d}] 인스타 접속 중...')
     sleep(3)
     while True:
         try:
@@ -205,7 +207,8 @@ def read_item(user_id: str):
 
 @app.on_event("shutdown")
 def shutdown_event():
-    print('FAST API가 종료됩니다')
+    d = datetime.datetime.now()
+    print(f'{d} FAST API가 종료됩니다')
     global driver
     driver.quit()
     print('chromium 을 종료했습니다')
